@@ -1,0 +1,22 @@
+{
+  "name": "home-day2",
+  "version": "1.0.0",
+  "description": "home study session day 2",
+  "main": "/spec",
+  "scripts": {
+    "test": "jasmine-node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nosisky/home-day2.git"
+  },
+  "keywords": [
+    "jasmine"
+  ],
+  "author": "Nosisky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nosisky/home-day2/issues"
+  },
+  "homepage": "https://github.com/nosisky/home-day2#readme"
+}
