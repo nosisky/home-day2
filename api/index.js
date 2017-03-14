@@ -20,8 +20,8 @@ let github 		= new GitHubApi({
 
 clear();
 console.log(
-  chalk.pink(
-    figlet.textSync('Dealwap', { horizontalLayout: 'full' })
+  chalk.yellow(
+    figlet.textSync('Gitrep', { horizontalLayout: 'full' })
   )
 );
 if (files.directoryExists('.git')) {
@@ -33,19 +33,19 @@ if (files.directoryExists('.git')) {
     {
       name: 'username',
       type: 'input',
-      message: 'Enter your Github username or e-mail address:',
+      message: 'Welcome, My name is Gitrep your personal Github API client by Dealwap! \n Let the game begin! \n Enter your Github username or e-mail address:',
       validate: function( value ) {
         if (value.length) {
           return true;
         } else {
-          return 'Required! Please enter your username or e-mail address';
+          return 'Please enter your username or e-mail address';
         }
       }
     },
     {
       name: 'password',
       type: 'password',
-      message: 'Enter your password:',
+      message: 'To Authorize you, i need your password \n Enter your password:',
       validate: function(value) {
         if (value.length) {
           return true;
@@ -216,7 +216,7 @@ githubAuth(function(err, authed) {
   if (err) {
     switch (err.code) {
       case 401:
-        console.log(chalk.red('Couldn\'t log you in. Please try again.'));
+        console.log(chalk.red('Couldn\'t log you in. Probably you typed in wrong details.'));
         break;
       case 422:
         console.log(chalk.red('You already have an access token. :('));
