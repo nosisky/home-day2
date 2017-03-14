@@ -9,10 +9,10 @@ Installation Steps
 
 
 Included  Automated Tasks
-    Run gitrep
-    Add the .gitignore file
-    Add the remaining contents of the working directory
-    Perform an initial commit
-    Add the newly-created remote repository
-    Push the working directory up to the remote
+   it automatically Runs git init
+    it automatically Runs Add the .gitignore file
+    it automatically Runs Add the remaining contents of the working directory
+    it automatically Runs Perform an initial commit
+    it automatically Runs Add the newly-created remote repository
+    it automatically Runs Push the working directory up to the remote
 
