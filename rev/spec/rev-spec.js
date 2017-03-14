@@ -8,7 +8,7 @@ describe('Palindrome', function() {
   });
 
   it('bob should return true', function() {
-    expect(app.reverseString("b==o==b")).toBeTruthy();
+    expect(app.reverseString("b===o===b")).toBeTruthy();
   });
 
    it('typeof input should return string', function() {
