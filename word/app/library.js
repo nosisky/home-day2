@@ -19,6 +19,12 @@ const words = {
     obj[repl[i]] = 1;
   }
   //Filter every element to count number of occurence
-  
+  repl.filter(function(a,b){
+    if(repl.indexOf(a) !== b){
+      obj[a] += 1;
+    }
+  });
+  return obj;
+}
 }
 module.exports = words;
