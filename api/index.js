@@ -1,53 +1,56 @@
 #!/usr/bin/env node
+//@nosisky
 let chalk       = require('chalk'); //require chalk
 let clear       = require('clear'); //require clar
 let CLI         = require('clui');
 let figlet      = require('figlet');
-let inquirer    = require('inquirer');
+let inquirer    = require('inquirer'); //This prompts user for questions
 let Preferences = require('preferences');
 let Spinner     = CLI.Spinner;
 let GitHubApi   = require('github'); //this is the githup API dependency
 let _           = require('lodash'); //lodash
 let git         = require('simple-git')();
 let touch       = require('touch');
-let fs          = require('fs');
-let files 		= require('./lib/files');
+let fs          = require('fs'); //require the node file system for reading and writing file
+let files 		= require('./lib/files'); //Path to out file.js
 let prefs 		= new Preferences('ginit');
 let github 		= new GitHubApi({
   version: '3.0.0'
-});
+}); //A new instance of the github API
 
-
+//This is our Banner text for our application
 clear();
 console.log(
   chalk.yellow(
     figlet.textSync('Gitrep', { horizontalLayout: 'full' })
   )
 );
+//Inorder to avoid error we verified if the current directory already has a .git file
 if (files.directoryExists('.git')) {
   console.log(chalk.red('Already a git repository!'));
-  process.exit();
+  process.exit(); //quits the application if the current directory already has .git file
 }
+//This gets the github credential from the user
  function getGithubCredentials(callback) {
   var questions = [
-    {
+    {//This gets the github username.
       name: 'username',
       type: 'input',
       message: 'Welcome, My name is Gitrep your personal Github API client by Dealwap! \n Let the game begin! \n Enter your Github username or e-mail address:',
       validate: function( value ) {
-        if (value.length) {
+        if (value.length) {//verify if the input field is not empty
           return true;
         } else {
           return 'Please enter your username or e-mail address';
         }
       }
     },
-    {
+    {//This gets the github password.
       name: 'password',
       type: 'password',
       message: 'To Authorize you, i need your password \n Enter your password:',
       validate: function(value) {
-        if (value.length) {
+        if (value.length) { //This verify if an input is given else a re-prompt.
           return true;
         } else {
           return 'Please enter your password';
@@ -58,7 +61,7 @@ if (files.directoryExists('.git')) {
 
   inquirer.prompt(questions).then(callback);
 }
-
+//This gets the githb token for us to use in our app
 function getGithubToken(callback) {
   var prefs = new Preferences('gitrep');
 
@@ -78,7 +81,7 @@ function getGithubToken(callback) {
         credentials
       )
     );
-
+ 
     github.authorization.create({
       scopes: ['user', 'public_repo', 'repo', 'repo:status'],
       note: 'gitrep, the command-line tool for initalizing Git repos'
@@ -97,7 +100,7 @@ function getGithubToken(callback) {
     });
   });
 }
-
+//If the user details is correct then we go ahead and create the repository.
 function createRepo(callback) {
   var argv = require('minimist')(process.argv.slice(2));
 
@@ -152,7 +155,7 @@ function createRepo(callback) {
     );
   });
 }
-
+//This creates the .gitignore file for us automatically
 function createGitignore(callback) {
   var filelist = _.without(fs.readdirSync('.'), '.git', '.gitignore');
 
@@ -181,11 +184,11 @@ function createGitignore(callback) {
     return callback();
   }
 }
-
+//Sets the repo URL
 function setupRepo(url, callback) {
   var status = new Spinner('Setting up the repository...');
   status.start();
-
+//This automates the git function and saves more time for us
   git
     .init()
     .add('.gitignore')
@@ -198,7 +201,7 @@ function setupRepo(url, callback) {
       return callback();
     });
 }
-
+//This uses the getGithubToken function within the github Auth function
 function githubAuth(callback) {
   getGithubToken(function(err, token) {
     if (err) {
@@ -211,7 +214,7 @@ function githubAuth(callback) {
     return callback(null, token);
   });
 }
-
+//Validates users details
 githubAuth(function(err, authed) {
   if (err) {
     switch (err.code) {
@@ -223,6 +226,7 @@ githubAuth(function(err, authed) {
         break;
     }
   }
+  //If login is successful, execute this
   if (authed) {
     console.log(chalk.green('Sucessfully authenticated! :)'));
     createRepo(function(err, url){
