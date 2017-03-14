@@ -214,7 +214,7 @@ function githubAuth(callback) {
     return callback(null, token);
   });
 }
-//Validates users details
+//Validates users details and matches with status code
 githubAuth(function(err, authed) {
   if (err) {
     switch (err.code) {
