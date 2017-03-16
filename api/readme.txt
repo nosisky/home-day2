@@ -4,6 +4,7 @@ So what gitrep will do is create a Git repository in the current folder, create 
 Installation Steps
 
     Clone this repo
+    cd api
     Run npm install
     run gitrep <repo-name> <your repo description>
 
